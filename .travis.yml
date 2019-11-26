@@ -1,19 +1,21 @@
 language: java
 jdk:
   - openjdk11
- 
 services:
   - docker
-
 before_install:
   - mvn -B versions:set -DnewVersion=$TRAVIS_BRANCH
-
 script:
   - mvn -B package
   - docker build -t inseefrlab/bootcampjs-api .
- 
 deploy:
   provider: script
   script:
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
     - docker push inseefrlab/bootcampjs-api
+  on:
+    branch: 1-ci
+env:
+  global:
+    - secure: WFwuWWL63zcWwNJWmnN48Tkwec7H5kMxzJyUzwGsY4g7FjpisE3ggf/RBzb2vPOFnBjUixCQ0IFMLffGBLw1tNfFWi/rTxKuo4/sAhzPv6Q+2niuF61ckA8rij1vbpiewjymRGSqDO+2RVERLqPTYqhRAdshjnzVAdiIra8De7wHV9TRJBI11/1+hJa7vKgbC0zW/PiDfglCau/f49s9tNuJCmU0zHMiRiD0H/ukPGfliUbbaFupPJnMGtxvIOtRk9WBk7N7g2j1St2ipYbOcsfzMUEKJNmCwO7iAFEIoNXntZiKnYfuTCV/ZBhkjo8+abxf6WZTE+r8yJNd8OJlkwHKUfNpnUohNd51ORZOhYZGybF1Jbf4OIRpauif8y4A7txcZ82OTmWoKDY4TXE/IyyxCy164cgsfR7WXB0l/aoiiI/6rJ8muIwTNg/e7AaXxqbHFVb6jLLp4WxYHGKVcZ6MHQET69+6kW3wmGtjp/Nfjn93cn4Yk9+RHvyR/akKbOBVvbAj6ChBsB1U/mGfeH3D1tYb+MwjgUpPxz5yXFwpvdjIE6KltpF5GiKdLJkg6mo2a+egHi2WwDay9uAfAaDAUL6iVGMwKp7IBcHBdIARZRN+j4PVBFiLPd7o2BfrkjXte1PnyaMd0vfpl5XwhPfrRsMlWrVNnWCdtSzGUzU=
+    - secure: G6mUOxFO9F0hW5Q61B0SCc4wHN3ZN/I/BgV7GQ4Q4876GKvWfZJFDHGasKnOSdgE1NNjPmVvme8ITn8V5KxE4MZMulQvNASqbK4QgyW6OewNWYxIo1grw2jDg+JprsVxZxAI22jQqFGL/Vo6X2C02JOrUNtTB2fQX3rlccbILqol9Y+QQhcTzhH3fbWqECPM11tgCyGJmTO+AtDxCWv02pZKivpHO7f1R4P+AMHt/cSqNac2bUIMqI+KOS9f8t5Q3OTLwmXEmgLB2XXSz8ALIH1Cti4H8fLAdP0qCVjZFYqJ/Umz5M8vtN4kpAH9RhILORBKTcSNaGTX7j/KJtkoSbQ/3tWBmzxDgA2x0ibfXcnwP7dD93mM9dgGAfXFFFmyK2E2wMPuKeU22raOHILR3lQkMthU+cij9sIwIsAjl/QwcaSnfXx+x7FC0SGkMF1jxGfD+I0PaH6znscb5Z1pMTOzkHCD0ImZ61cv591o8EI3iWJoVPWntZh9RvjxcSGS4lEHlnZp+tj+UeL7y+B7mSRdMC90ZdYH0hMcziv/4EpVJHRCcxlyXkWnmtHo70LkQeybsC0V9gGO+MPypG2vJcFm8N95T52vYAHT0utDDegKIYUhQst1vGo7TIXbsxGkte4VDkeSiFEE62FreUKaMTaGCnPtQ0QzFMao+JRwxec=

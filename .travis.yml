@@ -10,7 +10,7 @@ script:
   - docker build -t inseefrlab/bootcampjs-api .
 deploy:
   provider: script
-  script: bash ci/deploy_dockerhub.sh
+  script: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push inseefrlab/bootcampjs-api
   on:
     branch: 1-ci
 env:

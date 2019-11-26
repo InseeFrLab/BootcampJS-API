@@ -9,6 +9,7 @@ script:
   - mvn -B package
   - docker build -t inseefrlab/bootcampjs-api .
 deploy:
+  skip_cleanup: true
   provider: script
   script: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push inseefrlab/bootcampjs-api
   on:

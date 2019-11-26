@@ -1,7 +1,9 @@
 package fr.insee.bootcampjs.telephoneback;
 
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,20 +31,14 @@ public class DataLoader implements ApplicationRunner {
 
 		// TODO à replacer dans du service ailleurs
 
-		String emplacementCSV = "telephone-init-data.csv";
-		File fichierCSV = new ClassPathResource(emplacementCSV).getFile();
-		System.out.println("fichier csv existe " + fichierCSV.getAbsolutePath());
-		System.out.println("fichier csv existe " + fichierCSV.exists());
+		String emplacementCSV = "/telephone-init-data.csv";
+		InputStream fichierCSV = new ClassPathResource(emplacementCSV).getInputStream();
 		List<String> listeCSV = new ArrayList<>();
-
-		// CHARGER LE FICHIER DANS UNE LISTE
-		try (Stream<String> stream = Files.lines(fichierCSV.toPath())) {
-
-			listeCSV = stream.skip(1).collect(Collectors.toList());
-
-		} catch (IOException ioE) {
-			// Au cas où ça plante on a une roue de secours
-			chargementDeSecours();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(fichierCSV));
+		String line = null;
+		reader.readLine(); // Skip headers
+		while ((line = reader.readLine()) != null) {
+			listeCSV.add(line);
 		}
 
 		// convertir la liste en liste de designations à persister
@@ -59,7 +55,7 @@ public class DataLoader implements ApplicationRunner {
 	}
 
 	private Designation convertirEnDesignation(String[] split) {
-		
+
 		String num_ligne = split[0].trim();
 		String bureau = split[1].trim();
 		String designation = split[2].trim();
@@ -69,9 +65,11 @@ public class DataLoader implements ApplicationRunner {
 		String division = split[6].trim();
 		String observation = split[7].trim();
 
-//		return designationBean.phoneNumber(num_ligne).office(bureau).designations(designation).redList(vrai(liste_rouge))
-//				.attribution(attribution).service(service).division(division).observation(observation).build();
-		Designation des = new Designation(num_ligne, bureau, designation, vrai(liste_rouge), attribution, service, division, observation);
+		// return
+		// designationBean.phoneNumber(num_ligne).office(bureau).designations(designation).redList(vrai(liste_rouge))
+		// .attribution(attribution).service(service).division(division).observation(observation).build();
+		Designation des = new Designation(num_ligne, bureau, designation, vrai(liste_rouge), attribution, service,
+				division, observation);
 		return des;
 	}
 

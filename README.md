@@ -1,6 +1,7 @@
 # Back-end pour le bootcamp JS
 
-[![Build Status](https://travis-ci.org/InseeFrLab/BootcampJS-API.svg?branch=master)](https://travis-ci.org/InseeFrLab/BootcampJS-API)
+[![Bootcamp JS CI](https://github.com/InseeFrLab/BootcampJS-API/actions/workflows/ci.yml/badge.svg)](https://github.com/InseeFrLab/BootcampJS-API/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ## Lancer l'application
 

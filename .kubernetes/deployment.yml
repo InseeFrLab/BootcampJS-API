@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bootcampjs-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bootcampjs-api
+  template:
+    metadata:
+      labels:
+        app: bootcampjs-api
+    spec:
+      containers:
+        - name: bootcampjs-api
+          image: inseefrlab/bootcampjs-api:master
+          imagePullPolicy: Always
